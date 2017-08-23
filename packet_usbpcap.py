@@ -37,11 +37,6 @@ class USB(Packet):
         LEIntField("bodyLength", 0)
     ]
 
-    def pre_dissect(self, s):
-        if isinstance(self.underlayer, USB):
-            self.direction = self.underlayer.endpoint & 0x80
-        return s
-
     def detail(self):
         if hasattr(self.payload, "detail"):
             return self.sprintf("USB ep=%USB.endpoint% %-3s,USB.direction%") + " | " + self.payload.detail()
